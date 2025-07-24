@@ -11,20 +11,20 @@ div {
     text-align: center;
 }
 
-h1 {
-    padding-top: 3%;
-    transform: rotate(-5deg);
-    display: inline-block;
-    font-size: 50px;
-}
-
 .div0 {
     height: 150px;
     background-color: rgb(153, 167, 167);
 }
 
+.div0 h1 {
+    padding-top: 1%;
+    transform: rotate(-3deg);
+    display: inline-block;
+    font-size: 50px;
+}
+
 .div0 button {
-    margin-left: 300px;
+    margin-left: 200px;
     transform: rotate(20deg);
     display: inline-block;
 }
@@ -41,10 +41,23 @@ h1 {
 
 #info {
     font-size: 72px;
+    display: none;
 }
 
 #info p {
     transform: rotate(6deg);
-    display:none; /*ändra till inline-block!*/
     background-color: rgba(58, 58, 58, 0.61);
+}
+
+#print-box {
+    background-color: rgb(255, 250, 235);
+    height: 90%;
+}
+
+#print-box p {
+    margin: 0;
+    padding: 0;
+    color: rgb(19, 19, 19);
+    font-size: 20px;
+    font-style: italic;
 }
