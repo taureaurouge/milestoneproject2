@@ -1,6 +1,3 @@
-
-
-
 // linking the info-button aswell as the info-text
 
 const infoBtn = document.getElementById('info-btn');
@@ -40,7 +37,7 @@ const categories = {
     },
     verbs: {
         weight: 15,
-        words: ["ballyrag ", "fishing for ", "remain ", "jump ", "become ", "get over ", "wish for ", "finish up the ", "fixing ", "flirting with the "]
+        words: ["ballyrag ", "fishing for ", "remain ", "jump ", "become ", "get over ", "wish for ", "finish up the ", "fixing ", "flirting with "]
     },
     superlatives: {
         weight: 7,
@@ -73,7 +70,9 @@ const categories = {
 
 }
 
-// generating a sentence
+// making the sentence an array
+
+let sentence = [];
 
 // a function responsible for choosing a category based on "weight probability".
 
@@ -98,10 +97,61 @@ function chooseWord(categoryName, categories) {
     return wordList[index];
 }
 
+// link text output and input
 
-const category = chooseCategory(categories);
-const word = chooseWord(category, categories);
-console.log(`Category: ${category}, Word: ${word}`);                                                // print result of category-function + word-function
+const correctWord = document.getElementById("correct-words");
+const textArea = document.getElementById("text-area");
+const form = document.getElementById("input-words");
 
-// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// adding feedback-element to communicate current state to the user
 
+const feedbackElement = document.createElement("p");
+
+if (!document.getElementById("feedback")) {
+    feedbackElement.id = "feedback";
+    correctWord.parentNode.appendChild(feedbackElement);
+}
+
+// a variable existing to know whether the game is running or not
+
+let gameActive = true;
+
+// listening for submit-action
+
+form.addEventListener("submit", formSubmitHandler);
+
+// form submit-function to send the value in the text-area
+
+function formSubmitHandler(event) {
+    event.preventDefault();
+    checkSentence(textArea.value);
+}
+
+// new randomized word
+
+function addWord() {
+    const category = chooseCategory(categories);
+    const word = chooseWord(category, categories);
+    sentence.push(word);                                                        // add to sentence-array
+    correctWord.textContent = word.trim();                                      // to make sure only the last word of the sentence is being shown
+}
+
+// a function to compare the user-input-content with the with the current sentence
+
+function checkSentence(input) {
+    if (!gameActive) return;
+
+    const correctSentence = sentence.join("").trim();           // composing the sentence
+    if (input.trim() === correctSentence) {                     // comparing the existing sentence with the user submitted one
+        feedbackElement.textContent = "correct, so far";
+        addWord();
+        textArea.value = "";                                    // reseting so the text-area
+    } else {                                                    // whenever the user input content wont match the current generated sentence, turn the game.active = false and add feedback in the text-area
+        correctWord.textContent = "Game Over (●'◡'●)";         
+        textArea.value = "";
+        gameActive = false;
+    }
+}
+
+// Start the game with the first word visible
+addWord();
